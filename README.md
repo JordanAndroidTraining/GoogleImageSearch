@@ -8,7 +8,7 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-* [ ] User can **search for images** by specifying a query and launching a search. Search displays a grid of image results from the Google Image API.
+* [x] User can **search for images** by specifying a query and launching a search. Search displays a grid of image results from the Google Image API.
 * [ ] User can click on "settings" which allows selection of **advanced search options** to filter results
 * [ ] User can configure advanced search filters such as:
   * [ ] Size (small, medium, large, extra-large)
@@ -29,12 +29,13 @@ The following **optional** features are implemented:
 
 The following **bonus** features are implemented:
 
-* [ ] Used the [StaggeredGridView](https://github.com/f-barth/AndroidStaggeredGrid) to display improve the grid of image results
+* [x] Used the [StaggeredGridView](https://github.com/f-barth/AndroidStaggeredGrid) to display improve the grid of image results
 * [ ] User can [zoom or pan images](https://github.com/MikeOrtiz/TouchImageView) displayed in full-screen detail view
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Implement view holder to improve performance.
+* [x] Use self-implement AsyncTask to handle async action rather than use libraries.
 
 ## Video Walkthrough
 
