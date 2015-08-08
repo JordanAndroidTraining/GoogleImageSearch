@@ -3,7 +3,6 @@ package com.example.jordanhsu.googleimagesearch;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -23,7 +22,6 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.example.jordanhsu.googleimagesearch.Adapter.SearchResultAdapter;
 import com.example.jordanhsu.googleimagesearch.DataModel.SearchResultDataModel;
 import com.example.jordanhsu.googleimagesearch.Fragment.FilterSettingFragment;
-import com.example.jordanhsu.googleimagesearch.Fragment.FullScreenImageFragment;
 import com.example.jordanhsu.googleimagesearch.Listener.AsyncHTTPRequestListener;
 import com.example.jordanhsu.googleimagesearch.Listener.FilterSettingListener;
 import com.example.jordanhsu.googleimagesearch.Utils.GoogleImageSearchAPIUtil;
@@ -53,7 +51,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
     private boolean mIsLoading = true;
     private SearchView mSearchView;
     private FilterSettingFragment mFSFragment;
-    private Fragment mFullScreenImgFragment;
+
     private HashMap<String,String> mFilterQueryParam;
 
     @Override
@@ -67,7 +65,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
         mSearchInput = (EditText) findViewById(R.id.searchInputEt);
         mMainContainerGridView = (StaggeredGridView) findViewById(R.id.searchResultGv);
         mFSFragment = new FilterSettingFragment();
-        mFullScreenImgFragment = new FullScreenImageFragment();
+
 
         // set search result adapter
         mSRItemList = new ArrayList<>();
