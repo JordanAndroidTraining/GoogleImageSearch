@@ -20,7 +20,8 @@ import java.util.HashMap;
  */
 public class GoogleImageSearchAPIUtil {
     public static final String GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG = "GoogleImageSearchAPIUtilDevTag";
-    private static String mAPIUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8";
+    private static final String GOOGLE_API_URL = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8";
+    private static final int GOOGLE_API_PAGE_SIZE = 8;
     private GeneralUtil mGeneralUtil = new GeneralUtil();
     private AsyncHTTPRequestListener mListner;
 
@@ -29,26 +30,39 @@ public class GoogleImageSearchAPIUtil {
         mListner = listener;
     }
 
-    public void getResultByKeyword(String keyword){
+    public void getResultByKeyword(String keyword, int offset){
         try {
-            String queryUrl = mAPIUrl + "&q=" + URLEncoder.encode(keyword, "UTF-8") ;
+            String queryUrl = GOOGLE_API_URL + "&q=" + URLEncoder.encode(keyword, "UTF-8")
+                             + "&start=" + URLEncoder.encode(String.valueOf(offset*GOOGLE_API_PAGE_SIZE),"UTF-8" );
             Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"queryUrl: "+ queryUrl);
             AsyncHTTPRequestTask mAsyncHttpReqTask = new AsyncHTTPRequestTask(queryUrl, mListner);
             mAsyncHttpReqTask.execute();
         } catch (UnsupportedEncodingException e){
-            Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "UnsupportedEncodingException| " +e.toString());
+            Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "getResultByKeyword()|UnsupportedEncodingException| " +e.toString());
             e.printStackTrace();
         }
     }
 
-    public void getResultWithParameter(String keyword, HashMap<String,String> param){
-        Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"getResultWithParameter| keyword: " + keyword + " param: " + param.toString());
-        String queryUrl = mAPIUrl + "&q=" + keyword;
-        for(String key : param.keySet()) {
-            Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "getResultWithParameter| key: " + key + " value: " + param.get(key));
-            queryUrl += String.format("&%s=%s",key,param.get(key));
+    public void getResultWithParameter(String keyword, HashMap<String,String> param,int offset){
+        try {
+            String queryUrl = GOOGLE_API_URL + "&q=" + URLEncoder.encode(keyword, "UTF-8")
+                    + "&start=" + URLEncoder.encode(String.valueOf(offset*GOOGLE_API_PAGE_SIZE),"UTF-8" );
+            if(param != null){
+                Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"getResultWithParameter| keyword: " + keyword + " param: " + param.toString());
+                for(String key : param.keySet()) {
+                    Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "getResultWithParameter| key: " + key + " value: " + param.get(key));
+                    queryUrl += String.format("&%s=%s",key,param.get(key));
+                }
+            }
+
+            AsyncHTTPRequestTask mAsyncHttpReqTask = new AsyncHTTPRequestTask(queryUrl, mListner);
+            mAsyncHttpReqTask.execute();
+            Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"queryUrl: "+ queryUrl);
+        } catch (UnsupportedEncodingException e){
+            Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "getResultWithParameter()|UnsupportedEncodingException| " +e.toString());
+            e.printStackTrace();
         }
-        Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"queryUrl: "+ queryUrl);
+
     }
 
     public ArrayList<SearchResultDataModel> processAPIReturnJSON(JSONObject jsonObject){
@@ -85,9 +99,5 @@ public class GoogleImageSearchAPIUtil {
             e.printStackTrace();
             return  null;
         }
-
-
     }
-
-
 }

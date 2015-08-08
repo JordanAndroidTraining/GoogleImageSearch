@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/colorFilterSp"
+        android:spinnerMode="dropdown"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/colorTitleTv"
+        android:layout_marginStart="36dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Color"
+        android:id="@+id/colorTitleTv"
+        android:layout_alignBottom="@+id/colorFilterSp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/common_magin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Size"
+        android:id="@+id/sizeTitleTv"
+        android:layout_alignBottom="@+id/sizeFilterSp"
+        android:layout_below="@+id/colorFilterSp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/common_magin"/>
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sizeFilterSp"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:layout_below="@+id/colorFilterSp"
+        android:layout_alignStart="@+id/colorFilterSp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Type"
+        android:id="@+id/typeTitleTv"
+        android:layout_alignBottom="@+id/typeFilterSp"
+        android:layout_alignStart="@+id/colorTitleTv"
+        android:layout_below="@+id/sizeFilterSp"
+        android:gravity="center"/>
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/typeFilterSp"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:layout_below="@+id/sizeFilterSp"
+        android:layout_alignStart="@+id/sizeFilterSp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Site"
+        android:id="@+id/siteTitleTv"
+        android:layout_below="@+id/typeFilterSp"
+        android:layout_alignBottom="@+id/siteFilterSp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/common_magin"
+        />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/siteFilterSp"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:layout_below="@+id/typeFilterSp"
+        android:layout_alignStart="@+id/typeFilterSp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginRight="@dimen/common_magin"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:id="@+id/cancelBtn"
+        android:layout_below="@+id/siteFilterSp"
+        android:layout_toStartOf="@+id/applyBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:layout_marginRight="@dimen/common_magin"
+        android:layout_marginBottom="@dimen/common_magin"
+        android:id="@+id/applyBtn"
+        android:layout_alignTop="@+id/cancelBtn"
+        android:layout_alignEnd="@+id/siteFilterSp" />
+
+
+</RelativeLayout>

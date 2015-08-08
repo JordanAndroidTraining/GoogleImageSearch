@@ -2,4 +2,5 @@
 <resources>
     <style name="AppTheme" parent="android:Theme.Material.Light">
     </style>
+    <string name="common_margin">15dp</string>
 </resources>

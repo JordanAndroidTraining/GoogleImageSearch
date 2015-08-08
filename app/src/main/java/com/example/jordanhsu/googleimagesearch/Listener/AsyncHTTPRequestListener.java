@@ -7,4 +7,5 @@ import org.json.JSONObject;
  */
 public interface AsyncHTTPRequestListener {
     public void onAsyncHTTPRequestSuccess(JSONObject jsonObject);
+
 }

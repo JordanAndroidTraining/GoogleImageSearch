@@ -30,5 +30,5 @@
         android:layout_below="@+id/searchInputEt"
         android:layout_alignParentStart="true"
         app:item_margin="8dp"
-        app:column_count="2"/>
+        app:column_count="3"/>
 </RelativeLayout>

@@ -19,11 +19,11 @@ import java.net.URLConnection;
 public class AsyncHTTPRequestTask extends AsyncTask<Void, Void, JSONObject> {
     public static final String ASYNC_HTTP_REQUEST_TASK_DEV_TAG = "asyncHTTPRequestTaskDevTag";
     private String mQueryUrl;
-    private AsyncHTTPRequestListener mListenr;
+    private AsyncHTTPRequestListener mListener;
 
     public AsyncHTTPRequestTask(String url, AsyncHTTPRequestListener listener) {
         mQueryUrl = url;
-        mListenr = listener;
+        mListener = listener;
     }
 
     @Override
@@ -63,6 +63,6 @@ public class AsyncHTTPRequestTask extends AsyncTask<Void, Void, JSONObject> {
     protected void onPostExecute(JSONObject jsonObject) {
         super.onPostExecute(jsonObject);
         Log.d(ASYNC_HTTP_REQUEST_TASK_DEV_TAG, "AsyncHTTPRequestTask|onPostExecute()");
-        mListenr.onAsyncHTTPRequestSuccess(jsonObject);
+        mListener.onAsyncHTTPRequestSuccess(jsonObject);
     }
 }
