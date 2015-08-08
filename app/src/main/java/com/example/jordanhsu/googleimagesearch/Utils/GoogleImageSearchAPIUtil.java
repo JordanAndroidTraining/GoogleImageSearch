@@ -78,15 +78,45 @@ public class GoogleImageSearchAPIUtil {
 
                         // init value
                         String tbImgUrl = "";
+                        String imgWidth = "";
+                        String imgHeight = "";
+                        String imgTitle = "";
+                        String imgContent = "";
+                        String originalImgUrl = "";
 
                         // process JSON
                         if(mGeneralUtil.checkJSONObjectCol("tbUrl",row)){
                             tbImgUrl = row.getString("tbUrl");
                         }
-                        Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG,"processAPIReturnJSON()|tbUrl: " + tbImgUrl);
+                        Log.d(GOOGLE_IMAGE_SEARCH_API_UTIL_DEV_TAG, "processAPIReturnJSON()|tbUrl: " + tbImgUrl);
+
+                        if(mGeneralUtil.checkJSONObjectCol("width",row)){
+                            imgWidth = row.getString("width");
+                        }
+
+                        if(mGeneralUtil.checkJSONObjectCol("height",row)){
+                            imgHeight = row.getString("height");
+                        }
+
+                        if(mGeneralUtil.checkJSONObjectCol("titleNoFormatting",row)){
+                            imgTitle = row.getString("titleNoFormatting");
+                        }
+
+                        if(mGeneralUtil.checkJSONObjectCol("contentNoFormatting",row)){
+                            imgContent = row.getString("contentNoFormatting");
+                        }
+
+                        if(mGeneralUtil.checkJSONObjectCol("url",row)){
+                            originalImgUrl = row.getString("url");
+                        }
 
                         // set value to data model
                         srRow.setTbImgUrl(tbImgUrl);
+                        srRow.setImgWidth(imgWidth);
+                        srRow.setImgHeight(imgHeight);
+                        srRow.setImgTitle(imgTitle);
+                        srRow.setImgContent(imgContent);
+                        srRow.setOriginalImgUrl(originalImgUrl);
 
                         // append to return array list
                         returnArrList.add(srRow);

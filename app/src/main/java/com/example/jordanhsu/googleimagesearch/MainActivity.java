@@ -1,7 +1,10 @@
 package com.example.jordanhsu.googleimagesearch;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -20,6 +23,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.example.jordanhsu.googleimagesearch.Adapter.SearchResultAdapter;
 import com.example.jordanhsu.googleimagesearch.DataModel.SearchResultDataModel;
 import com.example.jordanhsu.googleimagesearch.Fragment.FilterSettingFragment;
+import com.example.jordanhsu.googleimagesearch.Fragment.FullScreenImageFragment;
 import com.example.jordanhsu.googleimagesearch.Listener.AsyncHTTPRequestListener;
 import com.example.jordanhsu.googleimagesearch.Listener.FilterSettingListener;
 import com.example.jordanhsu.googleimagesearch.Utils.GoogleImageSearchAPIUtil;
@@ -49,6 +53,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
     private boolean mIsLoading = true;
     private SearchView mSearchView;
     private FilterSettingFragment mFSFragment;
+    private Fragment mFullScreenImgFragment;
     private HashMap<String,String> mFilterQueryParam;
 
     @Override
@@ -61,8 +66,8 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
         mSearchBtn = (Button) findViewById(R.id.searchButton);
         mSearchInput = (EditText) findViewById(R.id.searchInputEt);
         mMainContainerGridView = (StaggeredGridView) findViewById(R.id.searchResultGv);
-        mFSFragment = new FilterSettingFragment();;
-
+        mFSFragment = new FilterSettingFragment();
+        mFullScreenImgFragment = new FullScreenImageFragment();
 
         // set search result adapter
         mSRItemList = new ArrayList<>();
@@ -152,9 +157,28 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
             case R.id.searchButton:
                 mKeyword = String.valueOf(mSearchInput.getText());
                 renderSRP();
-
-
                 Log.d(MAIN_ACTIVITY_DEV_TAG,"searchBtn Clicked!");
+                break;
+            case R.id.searchResultImageIv:
+                int clickedPosition = mMainContainerGridView.getPositionForView(v);
+
+                Intent intent = new Intent(this,FullScreenImgActivity.class);
+                intent.putExtra("data", mSRItemList.get(clickedPosition));
+                startActivity(intent);
+
+//                // begin fragment trasaction
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//
+//                // add to back stack
+//                ft.addToBackStack(null);
+//
+//                Bundle renderFullScreenData = new Bundle();
+//                renderFullScreenData.putSerializable("data", mSRItemList.get(clickedPosition));
+//                mFullScreenImgFragment.setArguments(renderFullScreenData);
+//
+//                // render fragment
+//                ft.add(R.id.fullScreenFragmentContiner, mFullScreenImgFragment).commit();
+
                 break;
         }
     }

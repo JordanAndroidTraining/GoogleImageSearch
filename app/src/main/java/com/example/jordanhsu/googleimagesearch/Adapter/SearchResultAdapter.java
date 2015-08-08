@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.example.jordanhsu.googleimagesearch.DataModel.SearchResultDataModel;
 import com.example.jordanhsu.googleimagesearch.R;
 import com.example.jordanhsu.googleimagesearch.Task.ImageLoadingTask;
+import com.example.jordanhsu.googleimagesearch.Utils.GeneralUtil;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResultDataModel> {
     public static final String SEARCH_RESULT_ADAPTER_DEV_TAG = "searchResultAdapterDevTag";
     private Context mContext;
     private ArrayList<SearchResultDataModel> mSRItemList;
+    private GeneralUtil mGeneralUtil = new GeneralUtil();
     public SearchResultAdapter(Context context, int resource, ArrayList<SearchResultDataModel> SRItemList) {
         super(context, resource, SRItemList);
         mContext = context;
@@ -54,26 +56,8 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResultDataModel> {
 
         // setting layout value
         viewHolder.resultImg.setBackgroundColor(black);
-        doAsyncImageLoadingTask(mSRItemList.get(position).getTbImgUrl(),viewHolder.resultImg);
-
+        mGeneralUtil.doAsyncImageLoadingTask(mSRItemList.get(position).getTbImgUrl(), viewHolder.resultImg);
+        viewHolder.resultImg.setOnClickListener((View.OnClickListener) mContext);
         return convertView;
-    }
-
-    public void doAsyncImageLoadingTask(String url, ImageView iv){
-        // clear image resource
-        iv.setImageResource(0);
-
-        // cancel previous task
-        ImageLoadingTask prevTask = (ImageLoadingTask) iv.getTag();
-        if(prevTask != null) {
-            prevTask.cancel(true);
-        }
-
-        // create new task && set to ImageView tag
-        ImageLoadingTask newTask = new ImageLoadingTask(url,iv);
-        iv.setTag(newTask);
-
-        // execute asyncTask
-        newTask.execute();
     }
 }
