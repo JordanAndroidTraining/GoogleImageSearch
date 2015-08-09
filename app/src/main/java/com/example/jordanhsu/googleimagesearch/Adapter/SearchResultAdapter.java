@@ -1,17 +1,23 @@
 package com.example.jordanhsu.googleimagesearch.Adapter;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+
 import com.example.jordanhsu.googleimagesearch.DataModel.SearchResultDataModel;
 import com.example.jordanhsu.googleimagesearch.R;
 import com.example.jordanhsu.googleimagesearch.Task.ImageLoadingTask;
 import com.example.jordanhsu.googleimagesearch.Utils.GeneralUtil;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 
@@ -26,10 +32,22 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResultDataModel> {
     private Context mContext;
     private ArrayList<SearchResultDataModel> mSRItemList;
     private GeneralUtil mGeneralUtil = new GeneralUtil();
+    private int mActivityVerticalMarginPixel;
+    private int mSrpMarginPixel;
+    private int mSrpColNum;
+    private int mScreenWidthPixel;
+
     public SearchResultAdapter(Context context, int resource, ArrayList<SearchResultDataModel> SRItemList) {
         super(context, resource, SRItemList);
         mContext = context;
         mSRItemList = SRItemList;
+
+        //Get screen && srp column width
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        mActivityVerticalMarginPixel = mContext.getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        mSrpMarginPixel = mContext.getResources().getDimensionPixelSize(R.dimen.srp_img_margin);
+        mSrpColNum = mContext.getResources().getInteger(R.integer.srp_col_num);
+        mScreenWidthPixel = displayMetrics.widthPixels;
     }
 
     private static class ViewHolder{
@@ -54,8 +72,13 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResultDataModel> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // setting layout value
-        viewHolder.resultImg.setBackgroundColor(black);
+        // calculate scale value
+        int scaledImgWidth = (mScreenWidthPixel - 2*(mActivityVerticalMarginPixel) - (mSrpColNum + 1)*mSrpMarginPixel)/mSrpColNum;
+        float scale = (float) scaledImgWidth / Integer.parseInt(mSRItemList.get(position).getImgWidth());
+
+        // set image height to prevent load more error && scroll error
+        viewHolder.resultImg.getLayoutParams().height = (int)(Integer.parseInt(mSRItemList.get(position).getImgHeight())*scale);
+
         mGeneralUtil.doAsyncImageLoadingTask(mSRItemList.get(position).getTbImgUrl(), viewHolder.resultImg);
         viewHolder.resultImg.setOnClickListener((View.OnClickListener) mContext);
         return convertView;

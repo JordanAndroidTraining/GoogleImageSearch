@@ -31,8 +31,8 @@
         android:id="@+id/searchResultGv"
         android:layout_below="@+id/searchInputEt"
         android:layout_alignParentStart="true"
-        app:item_margin="8dp"
-        app:column_count="3"/>
+        app:item_margin="@dimen/srp_img_margin"
+        app:column_count="@integer/srp_col_num"/>
 
 
 

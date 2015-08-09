@@ -75,16 +75,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
         //Bind Event
         mSearchBtn.setOnClickListener(this);
 
-       // mMainContainerGridView.setOnScrollListener(this);
-
-//        mGISUtil.getResultByKeyword("macbook");
-
-//        HashMap<String,String> queryParam = new HashMap<String,String>();
-//        queryParam.put("a","bbb");
-//        queryParam.put("c","xxxbbb");
-//        queryParam.put("d", "gggla");
-//        Log.d(MAIN_ACTIVITY_DEV_TAG, queryParam.toString());
-//        mGISUtil.getResultWithParameter("macbook", queryParam);
+       mMainContainerGridView.setOnScrollListener(this);
     }
 
     @Override
@@ -92,8 +83,6 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
 //        return true;
-
-
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
@@ -159,24 +148,9 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
                 break;
             case R.id.searchResultImageIv:
                 int clickedPosition = mMainContainerGridView.getPositionForView(v);
-
                 Intent intent = new Intent(this,FullScreenImgActivity.class);
                 intent.putExtra("data", mSRItemList.get(clickedPosition));
                 startActivity(intent);
-
-//                // begin fragment trasaction
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//
-//                // add to back stack
-//                ft.addToBackStack(null);
-//
-//                Bundle renderFullScreenData = new Bundle();
-//                renderFullScreenData.putSerializable("data", mSRItemList.get(clickedPosition));
-//                mFullScreenImgFragment.setArguments(renderFullScreenData);
-//
-//                // render fragment
-//                ft.add(R.id.fullScreenFragmentContiner, mFullScreenImgFragment).commit();
-
                 break;
         }
     }
@@ -188,7 +162,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        Log.d(MAIN_ACTIVITY_DEV_TAG,"onScroll() called!");
+        Log.d(MAIN_ACTIVITY_DEV_TAG,"onScroll()| firstVisibleItem: " + firstVisibleItem + " | visibleItemCount: " + visibleItemCount + " |totalItemCount: "+ totalItemCount);
         if(firstVisibleItem + visibleItemCount >= totalItemCount && mLoadedPage < TOTAL_SEARCH_RESULT_PAGES && !mIsLoading && mKeyword != null ){
             mLoadedPage++;
             mGISUtil.getResultWithParameter(mKeyword, mFilterQueryParam, mLoadedPage);

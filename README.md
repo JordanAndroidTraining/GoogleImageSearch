@@ -17,15 +17,16 @@ The following **required** functionality is completed:
   * [x] Site (espn.com)
 * [x] Subsequent searches have any filters applied to the search results
 * [x] User can tap on any image in results to see the image **full-screen**
-* [ ] User can **scroll down to see more images**. The maximum number of images is 64 (limited by API).
+* [x] User can **scroll down to see more images**. The maximum number of images is 64 (limited by API).
 
 The following **optional** features are implemented:
 
 * [ ] Implements robust error handling, [check if internet is available](http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity), handle error cases, network failures
 * [ ] Used the **ActionBar SearchView** or custom layout as the query box instead of an EditText
 * [ ] User can **share an image** to their friends or email it to themselves
-* [ ] Replaced Filter Settings Activity with a lightweight modal overlay
-* [ ] Improved the user interface and experiment with image assets and/or styling and coloring
+* [x] Replaced Filter Settings Activity with a lightweight modal overlay
+  * use DialogFragment
+* [x] Improved the user interface and experiment with image assets and/or styling and coloring
 
 The following **bonus** features are implemented:
 
