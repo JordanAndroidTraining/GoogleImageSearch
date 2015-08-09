@@ -53,7 +53,6 @@ public class AsyncHTTPRequestTask extends AsyncTask<Void, Void, JSONObject> {
             return new JSONObject(content.toString());
         } catch (JSONException e) {
             Log.d(ASYNC_HTTP_REQUEST_TASK_DEV_TAG, e.toString());
-
             e.printStackTrace();
             return null;
         }

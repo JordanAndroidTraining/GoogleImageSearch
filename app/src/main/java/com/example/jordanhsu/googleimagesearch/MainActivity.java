@@ -1,21 +1,17 @@
 package com.example.jordanhsu.googleimagesearch;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.EditText;
-//import android.widget.SearchView;
+import android.widget.SearchView;
 
 
 import com.etsy.android.grid.StaggeredGridView;
@@ -24,6 +20,7 @@ import com.example.jordanhsu.googleimagesearch.DataModel.SearchResultDataModel;
 import com.example.jordanhsu.googleimagesearch.Fragment.FilterSettingFragment;
 import com.example.jordanhsu.googleimagesearch.Listener.AsyncHTTPRequestListener;
 import com.example.jordanhsu.googleimagesearch.Listener.FilterSettingListener;
+import com.example.jordanhsu.googleimagesearch.Utils.GeneralUtil;
 import com.example.jordanhsu.googleimagesearch.Utils.GoogleImageSearchAPIUtil;
 
 import org.json.JSONObject;
@@ -39,9 +36,6 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
     public static final String FILTER_SETTING_FRAGMENT_TAG = "filterSettingFragmentTag";
 
     private GoogleImageSearchAPIUtil mGISUtil = new GoogleImageSearchAPIUtil(this);
-//    private AsyncHTTPRequestTask mAsyncHttpReqTask = new AsyncHTTPRequestTask()
-    private Button mSearchBtn;
-    private EditText mSearchInput;
     private ArrayList<SearchResultDataModel> mSRItemList;
     private StaggeredGridView mMainContainerGridView;
     private SearchResultAdapter mSRAdapter;
@@ -51,6 +45,7 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
     private boolean mIsLoading = true;
     private SearchView mSearchView;
     private FilterSettingFragment mFSFragment;
+    private GeneralUtil mGeneralUtil = new GeneralUtil();
 
     private HashMap<String,String> mFilterQueryParam;
 
@@ -61,52 +56,47 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
 
         // initilize && Get laytout element reference
         mSelf = this;
-        mSearchBtn = (Button) findViewById(R.id.searchButton);
-        mSearchInput = (EditText) findViewById(R.id.searchInputEt);
+
+
         mMainContainerGridView = (StaggeredGridView) findViewById(R.id.searchResultGv);
         mFSFragment = new FilterSettingFragment();
-
 
         // set search result adapter
         mSRItemList = new ArrayList<>();
         mSRAdapter = new SearchResultAdapter(mSelf,0,mSRItemList);
         mMainContainerGridView.setAdapter(mSRAdapter);
 
-        //Bind Event
-        mSearchBtn.setOnClickListener(this);
+        // check network connection
+        mGeneralUtil.isNetworkAvailable(mSelf);
 
-       mMainContainerGridView.setOnScrollListener(this);
+        mMainContainerGridView.setOnScrollListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.action_searchGI);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.action_searchGI);
-//        SearchView searchView = (SearchView) findViewById(R.id.action_searchGI);
-        Log.d(MAIN_ACTIVITY_DEV_TAG, "searchView: " + searchView);
 
         if(searchView != null){
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     // perform query here
+                    mKeyword = query;
+                    renderSRP();
+                    Log.d(MAIN_ACTIVITY_DEV_TAG,"onQueryTextSubmit()");
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    Log.d(MAIN_ACTIVITY_DEV_TAG,"onQueryTextChange()");
                     return false;
                 }
             });
         }
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -140,12 +130,15 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
 
     @Override
     public void onClick(View v) {
+        if(!mGeneralUtil.isNetworkAvailable(mSelf)){
+            return;
+        }
         switch (v.getId()){
-            case R.id.searchButton:
-                mKeyword = String.valueOf(mSearchInput.getText());
-                renderSRP();
-                Log.d(MAIN_ACTIVITY_DEV_TAG,"searchBtn Clicked!");
-                break;
+//            case R.id.searchButton:
+//                mKeyword = String.valueOf(mSearchInput.getText());
+//                renderSRP();
+//                Log.d(MAIN_ACTIVITY_DEV_TAG,"searchBtn Clicked!");
+//                break;
             case R.id.searchResultImageIv:
                 int clickedPosition = mMainContainerGridView.getPositionForView(v);
                 Intent intent = new Intent(this,FullScreenImgActivity.class);
@@ -157,13 +150,16 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-//        Log.d(MAIN_ACTIVITY_DEV_TAG,"onScrollStateChanged()|scrollState" + scrollState);
+        // nothing to do!
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if(!mGeneralUtil.isNetworkAvailable(mSelf)){
+            return;
+        }
         Log.d(MAIN_ACTIVITY_DEV_TAG,"onScroll()| firstVisibleItem: " + firstVisibleItem + " | visibleItemCount: " + visibleItemCount + " |totalItemCount: "+ totalItemCount);
-        if(firstVisibleItem + visibleItemCount >= totalItemCount && mLoadedPage < TOTAL_SEARCH_RESULT_PAGES && !mIsLoading && mKeyword != null ){
+        if(firstVisibleItem + visibleItemCount >= totalItemCount && mLoadedPage < TOTAL_SEARCH_RESULT_PAGES && !mIsLoading && mKeyword != null) {
             mLoadedPage++;
             mGISUtil.getResultWithParameter(mKeyword, mFilterQueryParam, mLoadedPage);
             Log.d(MAIN_ACTIVITY_DEV_TAG,"onScroll()| REACH BOTTOM | mLoadedPage: " + mLoadedPage);
@@ -189,4 +185,5 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
             mIsLoading = true;
         }
     }
+
 }

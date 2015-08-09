@@ -21,8 +21,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [ ] Implements robust error handling, [check if internet is available](http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity), handle error cases, network failures
-* [ ] Used the **ActionBar SearchView** or custom layout as the query box instead of an EditText
+* [x] Implements robust error handling, [check if internet is available](http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity), handle error cases, network failures
+* [x] Used the **ActionBar SearchView** or custom layout as the query box instead of an EditText
 * [ ] User can **share an image** to their friends or email it to themselves
 * [x] Replaced Filter Settings Activity with a lightweight modal overlay
   * use DialogFragment
@@ -37,11 +37,7 @@ The following **additional** features are implemented:
 
 * [x] Implement view holder to improve performance.
 * [x] Use self-implement AsyncTask to handle async action rather than use libraries.
+* [x] Use self-define listener to wait for async task
 
 ## Video Walkthrough
 
-
-## Notes
-
-
-## Open-source libraries used

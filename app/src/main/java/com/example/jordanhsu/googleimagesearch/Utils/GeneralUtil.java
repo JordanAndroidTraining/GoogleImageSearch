@@ -1,6 +1,10 @@
 package com.example.jordanhsu.googleimagesearch.Utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.jordanhsu.googleimagesearch.Task.ImageLoadingTask;
 
@@ -37,4 +41,14 @@ public class GeneralUtil {
         newTask.execute();
     }
 
+    public Boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean status = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        if(status == false){
+            Toast.makeText(context,"Network Connection Error!",Toast.LENGTH_SHORT).show();
+        }
+        return status;
+    }
 }

@@ -14,7 +14,8 @@
         android:id="@+id/searchInputEt"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/searchButton" />
+        android:layout_toStartOf="@+id/searchButton"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -22,7 +23,8 @@
         android:text="@string/search_btn_wording"
         android:id="@+id/searchButton"
         android:layout_alignBottom="@+id/searchInputEt"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
     <com.etsy.android.grid.StaggeredGridView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,9 +35,6 @@
         android:layout_alignParentStart="true"
         app:item_margin="@dimen/srp_img_margin"
         app:column_count="@integer/srp_col_num"/>
-
-
-
 
     <RelativeLayout
         android:layout_width="match_parent"
