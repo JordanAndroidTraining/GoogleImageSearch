@@ -79,7 +79,10 @@ public class SearchResultAdapter extends ArrayAdapter<SearchResultDataModel> {
         // set image height to prevent load more error && scroll error
         viewHolder.resultImg.getLayoutParams().height = (int)(Integer.parseInt(mSRItemList.get(position).getImgHeight())*scale);
 
+        // do async image loading
         mGeneralUtil.doAsyncImageLoadingTask(mSRItemList.get(position).getTbImgUrl(), viewHolder.resultImg);
+
+        // bind event
         viewHolder.resultImg.setOnClickListener((View.OnClickListener) mContext);
         return convertView;
     }

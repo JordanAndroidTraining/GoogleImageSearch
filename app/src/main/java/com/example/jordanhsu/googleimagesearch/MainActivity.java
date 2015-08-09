@@ -143,7 +143,8 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
 //                Log.d(MAIN_ACTIVITY_DEV_TAG,"searchBtn Clicked!");
 //                break;
             case R.id.searchResultImageIv:
-                int clickedPosition = mMainContainerGridView.getPositionForView(v);
+                int clickedPosition = mMainContainerGridView.getFirstVisiblePosition() + mMainContainerGridView.getPositionForView(v);
+                Log.d(MAIN_ACTIVITY_DEV_TAG,"clicked position: " + clickedPosition);
                 Intent intent = new Intent(this,FullScreenImgActivity.class);
                 intent.putExtra("data", mSRItemList.get(clickedPosition));
                 startActivity(intent);
