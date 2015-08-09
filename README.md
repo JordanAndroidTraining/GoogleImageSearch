@@ -40,4 +40,4 @@ The following **additional** features are implemented:
 * [x] Use self-define listener to wait for async task
 
 ## Video Walkthrough
-
+![Video Walkthrough](demo.gif)

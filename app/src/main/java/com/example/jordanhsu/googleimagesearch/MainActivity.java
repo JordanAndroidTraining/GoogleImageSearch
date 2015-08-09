@@ -83,6 +83,9 @@ public class MainActivity extends Activity implements AsyncHTTPRequestListener, 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    if(!mGeneralUtil.isNetworkAvailable(mSelf)){
+                        return false;
+                    }
                     // perform query here
                     mKeyword = query;
                     renderSRP();
